@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<Server port="8005" shutdown="SHUTDOWN">
+  <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+  <Listener className="org.apache.catalina.core.JasperListener" />
+  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
+  <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
+
+  <GlobalNamingResources>
+  	<Resource auth="Container"
+              type="oracle.jdbc.pool.OracleDataSource"
+              factory="oracle.jdbc.pool.OracleDataSourceFactory"
+              driverClassName="oracle.jdbc.driver.OracleDriver"
+              maxActive="20"
+              maxIdle="10"
+              maxWait="-1"
+              name="tomcat-userbase-pool"
+              url="jdbc:oracle:thin:tomcat_user/ook2equ9xe@10.100.100.27:1521:oraserv"/>
+  </GlobalNamingResources>
+
+  <Service name="Catalina">
+    <Connector port="8888" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+               
+    <Engine name="Catalina" defaultHost="webapps">
+      <Realm className="org.apache.catalina.realm.DataSourceRealm"
+      			dataSourceName="tomcat-userbase-pool"
+            digest="MD5"
+            userTable="TOMCAT_USERBASE.REAL_USERS"
+						userNameCol="USER_NAME"
+						userCredCol="USER_PASS"
+						userRoleTable="TOMCAT_USERBASE.REAL_USER_ROLES" 
+						roleNameCol="ROLE_NAME" />
+
+      <Host name="webapps"  appBase="webapps" unpackWARs="true" autoDeploy="true">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="localhost_access_log." suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+
+      </Host>
+    </Engine>
+  </Service>
+
+	<Service name="CatalinaTest">
+    <Connector port="9999" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+               
+    <Engine name="CatalinaTest" defaultHost="webapps-test">
+      <Realm className="org.apache.catalina.realm.DataSourceRealm"
+      			dataSourceName="tomcat-userbase-pool"
+            digest="MD5"
+            userTable="TOMCAT_USERBASE.TEST_USERS"
+						userNameCol="USER_NAME"
+						userCredCol="USER_PASS"
+						userRoleTable="TOMCAT_USERBASE.TEST_USER_ROLES" 
+						roleNameCol="ROLE_NAME" />
+
+      <Host name="webapps-test"  appBase="webapps-test" unpackWARs="true" autoDeploy="true">
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+               prefix="localhost_access_log." suffix=".txt"
+               pattern="%h %l %u %t &quot;%r&quot; %s %b" />
+
+      </Host>
+    </Engine>
+  </Service>
+
+</Server>

@@ -1,0 +1,12 @@
+# create file ~/.ssh/config
+# past in config file following configuration
+
+Host me.github.com
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_personal_id_rsa
+
+Host work.github.com
+    HostName github.com
+    PreferredAuthentications publickey
+    IdentityFile ~/.ssh/github_work_id_rsa

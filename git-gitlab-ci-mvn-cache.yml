@@ -1,0 +1,20 @@
+image: maven:3.3.9-jdk-8
+
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+    - .m2/
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2"
+
+job-deploy-test:
+  stage: deploy
+  only:
+    - test
+  script:
+    - mvn package
+    - curl -i -T "project/target/project.war" "http://user:pass@ip:port/manager/text/deploy?path=/project&update=true"

@@ -1,0 +1,29 @@
+" Turn on line numbering. Turn it off with "set nonu" 
+set number
+
+" Set syntax on
+syntax on
+
+" Auto indent lines
+set autoindent
+
+" Change tab width
+set tabstop=4 softtabstop=4 shiftwidth=4
+
+" Expand tab to spaces
+set expandtab
+
+" Brace highlighting
+hi MatchParen cterm=bold ctermbg=none ctermfg=blue
+
+" Auto change directory 
+set autochdir
+
+" Highlighting search matches
+set hlsearch
+
+" Show the next match while entering a search
+set incsearch
+
+" Do no wrap lines
+set nowrap

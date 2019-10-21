@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Configuration status="error">
+    
+    <Properties>
+        <Property name="LogFileNameTest">nbe-chancellery-test</Property>
+        <Property name="LogFileName">nbe-chancellery</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="FileAppenderTest" 
+                     fileName="${sys:catalina.base}/logs/${LogFileNameTest}.log"
+                     filePattern="${sys:catalina.base}/logs/${LogFileNameTest}-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%t] %C - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        
+        <RollingFile name="FileAppender" 
+                     fileName="${sys:catalina.base}/logs/${LogFileName}.log"
+                     filePattern="${sys:catalina.base}/logs/${LogFileName}-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%t] %C - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        
+        <Console name="ConsoleAppender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%t] %C - %msg%n</pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    
+    <Loggers>
+        <Root level="info" additivity="true">
+            <appender-ref ref="ConsoleAppender"/>
+        </Root>
+        
+        <Logger name="FileLoggerDevel" level="info" additivity="true">
+            <appender-ref ref="FileAppenderTest" />
+        </Logger>
+        
+        <Logger name="FileLoggerTest" level="info" additivity="false">
+            <appender-ref ref="FileAppenderTest" />
+        </Logger>
+        
+        <Logger name="FileLogger" level="error" additivity="false">
+            <appender-ref ref="FileAppender" />
+        </Logger>
+    </Loggers>
+    
+</Configuration>
