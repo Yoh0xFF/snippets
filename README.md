@@ -1,3 +1,3 @@
-# snippets
+# Snippets
 
 Small useful snippets
