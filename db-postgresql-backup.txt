@@ -1,4 +1,0 @@
-BACKUP
-    sudo -u postgres pg_dump db_name | xz > backup.sql.xz
-RESTORE
-    xz -cd backup.sql.xz | sudo -u postgres psql db_name
